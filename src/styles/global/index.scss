@@ -1,1 +1,54 @@
 @import 'normilize';
+@import '~bootstrap/scss/bootstrap';
+
+.wrapper {
+  padding: 0.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: flex-end;
+
+  & Button {
+    width: 100px;
+    height: 100px;
+
+    & img {
+      width: 100%;
+    }
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.gallery {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.filter {
+  width: 25%;
+  & .btn-block {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    Button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 35px;
+      width: 35px;
+      border-radius: 50%;
+    }
+  }
+}
