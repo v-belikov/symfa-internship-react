@@ -1,14 +1,18 @@
 import React from 'react';
-import Basket from './bucket/Basket';
+import Cart from './cart/Cart';
 import ProductCard from './product-cards/ProductCard';
 import Sizes from './sizes/Sizes';
+
+import './index.scss';
 
 const Index = () => {
   return (
     <div>
-      <Sizes />
-      <ProductCard />
-      <Basket />
+      <div className="index-container">
+        <Sizes />
+        <ProductCard />
+      </div>
+      <Cart />
     </div>
   );
 };
