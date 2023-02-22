@@ -2,17 +2,28 @@ import React, { FC } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
-type PropsType = { title: string; price: number; currencyFormat: string };
+type PropsType = {
+  title: string;
+  price: number;
+  currencyFormat: string;
+  availableSizes: Array<string>;
+  sku: number;
+};
 
 export const GalleryItem: FC<PropsType> = ({
   title,
   price,
   currencyFormat,
+  sku,
 }) => {
   return (
     <div className="gallery-item">
-      <Card style={{ width: '18rem' }}>
-        <Card.Img variant="top" src="sweaterIcon" alt="Card image" />
+      <Card>
+        <Card.Img
+          variant="top"
+          src={`http://54.175.134.132/images/products/${sku}-1-cart.webp`}
+          alt="Card image"
+        />
         <Card.Body>
           <Card.Title>{title}</Card.Title>
           <Card.Text>

@@ -18,6 +18,8 @@ export const Gallery: FC = () => {
                 title={item.title}
                 price={item.price}
                 currencyFormat={item.currencyFormat}
+                availableSizes={item.availableSizes}
+                sku={item.sku}
               />
             );
           })}
