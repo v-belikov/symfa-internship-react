@@ -1,10 +1,13 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../store/cart/cartSlice';
 import { useGetProductsQuery } from '../../store/products';
 
 import './ProductCard.scss';
 
 const ProductCard = () => {
   const { data = {}, isLoading } = useGetProductsQuery(null);
+  const dispatch = useDispatch();
 
   if (isLoading) {
     return <h1>Loading...</h1>;
@@ -24,7 +27,7 @@ const ProductCard = () => {
               Free Shipping
             </p>
             <img
-              src={`http://54.175.134.132/images/products/${item.sku}-1-cart.webp`}
+              src={`http://54.175.134.132/images/products/${item.sku}-1-product.webp`}
               alt="product"
             />
             <p className="title">{item.title}</p>
@@ -35,7 +38,13 @@ const ProductCard = () => {
               or {item.installments} x{item.currencyFormat}
               {(item.price / item.installments).toFixed(2)}
             </p>
-            <button className="add-to-cart-btn" type="button">
+            <button
+              className="add-to-cart-btn"
+              type="button"
+              onClick={() => {
+                dispatch(addToCart({ item }));
+              }}
+            >
               Add to cart
             </button>
           </div>
