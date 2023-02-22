@@ -1,32 +1,26 @@
-import React, { FC, useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { FC } from 'react';
+import { useGetProductsQuery } from 'app/store/products';
 import { GalleryItem } from './gallery-item';
 
 export const Gallery: FC = () => {
-  const [products, setProducts] = useState([]);
+  const { data, error, isLoading } = useGetProductsQuery('products');
 
-  // const [products, setProducts] = useState<ProductsType[]>([]);
-
-  // const getProduct = () => {
-  //   axios.get<ProductsType>(`http://54.175.134.132//products`).then(res => {
-  //     return res.data;
-  //   });
-  // };
-
-  // type ProductsType = ReturnType<typeof getProduct>;
-
-  useEffect(() => {
-    axios.get(`http://54.175.134.132//products`).then(res => {
-      setProducts(res.data);
-    });
-    // setProducts<ProductsType>(getProduct());
-  }, []);
+  type ProductsType = ReturnType<typeof data>;
 
   return (
     <div className="gallery">
-      {products.map(item => {
-        return <GalleryItem key={item.id} title={item.title} />;
-      })}
+      {error || isLoading
+        ? 'error'
+        : data.map((item: ProductsType) => {
+            return (
+              <GalleryItem
+                key={item.id}
+                title={item.title}
+                price={item.price}
+                currencyFormat={item.currencyFormat}
+              />
+            );
+          })}
     </div>
   );
 };
