@@ -1,5 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const decrement = value => {
+  if (value === 1) {
+    return value;
+  }
+
+  return value - 1;
+};
+
 const cartSlice = createSlice({
   name: 'cart',
   initialState: {
@@ -18,22 +26,30 @@ const cartSlice = createSlice({
       }
     },
     incrementQuantity: (state, action) => {
-      const item = state.cart.find(elem => elem.id === action.payload.id);
+      const index = state.cart.findIndex(
+        elem => elem.item.id === action.payload,
+      );
 
-      item.quantity += 1;
+      // eslint-disable-next-line no-param-reassign
+      state.cart[index] = {
+        ...state.cart[index],
+        quantity: state.cart[index].quantity + 1,
+      };
     },
     decrementQuantity: (state, action) => {
-      const item = state.cart.find(element => element.id === action.payload.id);
+      const index = state.cart.findIndex(element => {
+        return element.item.id === action.payload;
+      });
 
-      if (item.quantity === 1) {
-        item.quantity = 1;
-      } else {
-        item.quantity -= 1;
-      }
+      // eslint-disable-next-line no-param-reassign
+      state.cart[index] = {
+        ...state.cart[index],
+        quantity: decrement(state.cart[index].quantity),
+      };
     },
     removeItem: (state, action) => {
       const removeItem = state.cart.filter(item => {
-        return item.id !== action.payload.id;
+        return item.item.id !== action.payload;
       });
 
       // eslint-disable-next-line no-param-reassign

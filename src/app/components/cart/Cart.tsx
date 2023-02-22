@@ -19,7 +19,7 @@ const Cart = () => {
 
     cart.forEach((item: any) => {
       totalQuantity += item.quantity;
-      totalPrice += item.item.price;
+      totalPrice += item.item.price * item.quantity;
     });
 
     return { totalQuantity, totalPrice };
@@ -28,7 +28,7 @@ const Cart = () => {
   return (
     <div>
       <div className="cart-btn" onClick={() => setCartActive(!cartActive)}>
-        <img src="../../assets/images/cart-icon.png" alt="Cart" />
+        <img src="../../../assets/images/cart-icon.png" alt="Cart" />
       </div>
       <div className={cartActive ? 'cart-container active' : 'cart-container'}>
         <div className="cart-content">
