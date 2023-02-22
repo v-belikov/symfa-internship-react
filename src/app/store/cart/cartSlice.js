@@ -7,11 +7,9 @@ const cartSlice = createSlice({
   },
   reducers: {
     addToCart: (state, action) => {
-      const itemInCart = state.cart.find(elem => {
-        console.log(elem, 'da');
-
-        return elem.id === action.payload.item.id;
-      });
+      const itemInCart = state.cart.find(
+        elem => elem.item.id === action.payload.item.id,
+      );
 
       if (itemInCart) {
         itemInCart.quantity += 1;
@@ -20,14 +18,12 @@ const cartSlice = createSlice({
       }
     },
     incrementQuantity: (state, action) => {
-      const item = state.cart.find(elem => elem.id === action.payload.item.id);
+      const item = state.cart.find(elem => elem.id === action.payload.id);
 
       item.quantity += 1;
     },
     decrementQuantity: (state, action) => {
-      const item = state.cart.find(
-        element => element.id === action.payload.item,
-      );
+      const item = state.cart.find(element => element.id === action.payload.id);
 
       if (item.quantity === 1) {
         item.quantity = 1;
@@ -37,7 +33,7 @@ const cartSlice = createSlice({
     },
     removeItem: (state, action) => {
       const removeItem = state.cart.filter(item => {
-        return item.id !== action.payload;
+        return item.id !== action.payload.id;
       });
 
       // eslint-disable-next-line no-param-reassign
