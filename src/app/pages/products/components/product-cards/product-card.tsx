@@ -1,11 +1,11 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { addToCart } from '../../store/cart/cartSlice';
-import { useGetProductsQuery } from '../../store/products';
+import { addToCart } from 'app/store/cart';
+import { useGetProductsQuery } from 'app/store/products';
 
-import './ProductCard.scss';
+import './product-card.scss';
 
-const ProductCard = () => {
+export const ProductCard = () => {
   const { data = {}, isLoading } = useGetProductsQuery(null);
   const dispatch = useDispatch();
 
@@ -53,5 +53,3 @@ const ProductCard = () => {
     </div>
   );
 };
-
-export default ProductCard;

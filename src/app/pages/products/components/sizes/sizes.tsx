@@ -1,8 +1,8 @@
 import React from 'react';
 
-import './Sizes.scss';
+import './sizes.scss';
 
-const Sizes = () => {
+export const Sizes = () => {
   const availableSizes = ['XS', 'S', 'M', 'ML', 'L', 'XL', 'XXL'];
 
   return (
@@ -24,5 +24,3 @@ const Sizes = () => {
     </div>
   );
 };
-
-export default Sizes;

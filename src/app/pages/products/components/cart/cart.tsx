@@ -4,11 +4,11 @@ import {
   decrementQuantity,
   incrementQuantity,
   removeItem,
-} from '../../store/cart/cartSlice';
+} from 'app/store/cart';
 
 import './cart.scss';
 
-const Cart = () => {
+export const Cart = () => {
   const [cartActive, setCartActive] = useState(false);
   const cart = useSelector((state: any) => state.cart.cart);
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ const Cart = () => {
   return (
     <div>
       <div className="cart-btn" onClick={() => setCartActive(!cartActive)}>
-        <img src="../../../assets/images/cart-icon.png" alt="Cart" />
+        <img src="../../../../../assets/images/cart-icon.png" alt="Cart" />
       </div>
       <div className={cartActive ? 'cart-container active' : 'cart-container'}>
         <div className="cart-content">
@@ -82,5 +82,3 @@ const Cart = () => {
     </div>
   );
 };
-
-export default Cart;
