@@ -15,6 +15,7 @@ export const Gallery: FC = () => {
         : data.map((item: ProductsType) => {
             return (
               <GalleryItem
+                id={item.id}
                 key={item.id}
                 title={item.title}
                 price={item.price}

@@ -3,11 +3,16 @@ import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 /* eslint-disable no-restricted-imports */
 import basketiIcon from '../../../../assets/images/shopping-basket.svg';
+import { ShoppingBasket } from '../shopping-basket';
 
 export const Header: FC = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  // const quantityIncrease = (id: number) => {};
+  // const quantityDecrease = (id: number) => {};
+  // const removeGoods = (id: number) => {};
 
   return (
     <header className="header wrapper">
@@ -18,7 +23,13 @@ export const Header: FC = () => {
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Cart</Offcanvas.Title>
         </Offcanvas.Header>
-        <Offcanvas.Body>Add some products in the cart</Offcanvas.Body>
+        <Offcanvas.Body>
+          <ShoppingBasket
+          // quantityIncrease={quantityIncrease}
+          // quantityDecrease={quantityDecrease}
+          // removeGoods={removeGoods}
+          />
+        </Offcanvas.Body>
       </Offcanvas>
     </header>
   );

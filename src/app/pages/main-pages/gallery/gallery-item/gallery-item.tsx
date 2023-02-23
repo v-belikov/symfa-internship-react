@@ -4,6 +4,7 @@ import Card from 'react-bootstrap/Card';
 import { config } from 'app/core/config/config';
 
 type PropsType = {
+  id: number;
   title: string;
   price: number;
   currencyFormat: string;
@@ -12,11 +13,16 @@ type PropsType = {
 };
 
 export const GalleryItem: FC<PropsType> = ({
+  id,
   title,
   price,
   currencyFormat,
   sku,
 }) => {
+  const addItemToCard = (currentId: number) => {
+    console.log(currentId);
+  };
+
   return (
     <div className="gallery-item">
       <Card>
@@ -32,7 +38,9 @@ export const GalleryItem: FC<PropsType> = ({
             {price}
           </Card.Text>
           <div className="d-grid gap-2">
-            <Button variant="dark">Add to cart</Button>
+            <Button onClick={() => addItemToCard(id)} variant="dark">
+              Add to cart
+            </Button>
           </div>
         </Card.Body>
       </Card>
