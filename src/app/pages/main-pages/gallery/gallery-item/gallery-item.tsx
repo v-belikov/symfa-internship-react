@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import { config } from 'app/core/config/config';
 
 type PropsType = {
   title: string;
@@ -21,7 +22,7 @@ export const GalleryItem: FC<PropsType> = ({
       <Card>
         <Card.Img
           variant="top"
-          src={`http://54.175.134.132/images/products/${sku}-1-cart.webp`}
+          src={`${config.API_URL}/images/products/${sku}-1-cart.webp`}
           alt="Card image"
         />
         <Card.Body>

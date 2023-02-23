@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Outlet } from 'react-router-dom';
-import { Content } from 'app/components/content';
-import { Header } from 'app/components/header';
+import { Content } from 'app/pages/main-pages/content';
+import { Header } from 'app/pages/main-pages/header';
 
 export const MainLayout: FC = () => {
   return (

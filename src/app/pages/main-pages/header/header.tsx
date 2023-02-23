@@ -1,7 +1,8 @@
 import React, { FC, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
-import basketiIcon from '../../../assets/images/shopping-basket.svg';
+/* eslint-disable no-restricted-imports */
+import basketiIcon from '../../../../assets/images/shopping-basket.svg';
 
 export const Header: FC = () => {
   const [show, setShow] = useState(false);
