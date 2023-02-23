@@ -1,0 +1,89 @@
+.goods-cards{
+    display: flex;
+    flex-direction: column;
+}
+.cards{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:space-between;
+    width: 100%;
+}
+.card{
+    font-size: 16px;
+    height: 520px;
+    width: 220px;
+    margin: 20px 5px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    position: relative;
+}
+.card:hover{
+    .add-button{
+        background-color: rgb(234, 191, 0);
+    }
+}
+.isFreeShipping{
+    position: absolute;
+    top:0;
+    right: 0;
+    padding: 5px;
+    margin:0;
+    background-color: black;
+    color:rgb(255, 255, 255);
+    font-size: 0.6em;
+    z-index: 1;
+}
+.card-image{
+    position: absolute;
+    top:0;
+    z-index: 0;
+    width: 220px;
+    height: 320px;
+}
+.title{
+    position: absolute;
+    z-index: 1;
+    top: 320px;
+    display:flex;
+    justify-content: center;
+}
+.title::after{
+    content: "";
+    position: absolute;
+    top: 40px;
+    height: 0px;
+    width: 30px;
+    border-top: 2px solid rgb(234, 191, 0);
+    border-radius: 100px;
+}
+.price{
+    position: absolute;
+    z-index: 1;
+    top: 400px;
+}
+.price-bold{
+    font-weight: bold;
+    font-size: 24px;
+}
+.price-parts{
+    position: absolute;
+    z-index: 1;
+    top: 430px;
+    color:rgb(146, 146, 146);
+}
+.price-parts-bold{
+    font-weight: bold;
+}
+.add-button{
+    position: absolute;
+    z-index: 1;
+    bottom: 0;
+    border:0;
+    background-color: black;
+    color:rgb(255, 255, 255);
+    padding: 15px 0;
+    width: 220px; 
+    cursor: pointer;
+    transition: all 0.1s ease; 
+}

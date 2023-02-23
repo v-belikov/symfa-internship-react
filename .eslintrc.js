@@ -187,6 +187,12 @@ module.exports = {
         next: '*',
       },
     ],
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
+    ],
   },
   settings: {
     react: {

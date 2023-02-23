@@ -1,0 +1,29 @@
+.sizes-head{
+    font-weight: 700;
+    margin: 0 0 20px 0;
+}
+.sizes-buttons{
+    width: 210px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.sizes-buttons_button{
+    width: 35px;
+    height: 35px;
+    border-radius: 100px;
+    border: 0;
+    margin: 10px 4px;
+    font-size: 0.8em;
+    font-weight: 300;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.sizes-buttons_button:hover{
+    border: 1px solid rgb(0, 0, 0);
+}
+.sizes-buttons_button:focus{
+    background-color: black;
+    color: white;
+}
