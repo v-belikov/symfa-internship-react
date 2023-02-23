@@ -1,21 +1,19 @@
 import React from 'react';
+import { AVAILABLE_SIZES } from 'app/core/models/available-sizes.constant';
 
 import './sizes.scss';
 
 export const Sizes = () => {
-  const availableSizes = ['XS', 'S', 'M', 'ML', 'L', 'XL', 'XXL'];
-
   return (
     <div className="sizes-container">
-      <h2>Sizes:</h2>
+      <h3>Sizes:</h3>
       <div className="sizes-wrapper">
-        {availableSizes.map(elem => {
+        {AVAILABLE_SIZES.map(size => {
           return (
-            <div className="size-item" key={availableSizes.indexOf(elem)}>
-              {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+            <div className="size-item" key={size}>
               <label>
-                <input type="checkbox" value={elem} className="checkbox" />
-                <p className="size">{elem}</p>
+                <input type="checkbox" value={size} className="checkbox" />
+                <p className="size">{size}</p>
               </label>
             </div>
           );

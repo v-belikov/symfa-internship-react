@@ -1,11 +1,12 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { config } from 'app/core/config';
 import { addToCart } from 'app/store/cart';
 import { useGetProductsQuery } from 'app/store/products';
 
 import './product-card.scss';
 
-export const ProductCard = () => {
+export const ProductCards = () => {
   const { data = {}, isLoading } = useGetProductsQuery(null);
   const dispatch = useDispatch();
 
@@ -27,7 +28,7 @@ export const ProductCard = () => {
               Free Shipping
             </p>
             <img
-              src={`http://54.175.134.132/images/products/${item.sku}-1-product.webp`}
+              src={`${config.API_URL}/images/products/${item.sku}-1-product.webp`}
               alt="product"
             />
             <p className="title">{item.title}</p>

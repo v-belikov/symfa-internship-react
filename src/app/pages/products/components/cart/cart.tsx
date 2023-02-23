@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useMemo, useState } from 'react';
+import { useAppDispatch, useAppSelector } from 'app/core/hooks';
+import { RootState } from 'app/store';
 import {
   decrementQuantity,
   incrementQuantity,
@@ -9,33 +10,37 @@ import {
 import './cart.scss';
 
 export const Cart = () => {
-  const [cartActive, setCartActive] = useState(false);
-  const cart = useSelector((state: any) => state.cart.cart);
-  const dispatch = useDispatch();
+  const [isCartActive, setCartActive] = useState<boolean>(false);
+  const cart = useAppSelector((state: RootState) => state.cart.cart);
+  const dispatch = useAppDispatch();
 
-  const getTotal = () => {
-    let totalQuantity: number = 0;
-    let totalPrice: number = 0;
+  const total = useMemo(
+    () =>
+      cart.reduce(
+        (acc, { quantity, item: { price } }) => {
+          acc.quantity += quantity;
+          acc.price += quantity * price;
 
-    cart.forEach((item: any) => {
-      totalQuantity += item.quantity;
-      totalPrice += item.item.price * item.quantity;
-    });
-
-    return { totalQuantity, totalPrice };
-  };
+          return acc;
+        },
+        { quantity: 0, price: 0 },
+      ),
+    [cart],
+  );
 
   return (
-    <div>
-      <div className="cart-btn" onClick={() => setCartActive(!cartActive)}>
+    <div className="cart">
+      <div className="cart-btn" onClick={() => setCartActive(!isCartActive)}>
         <img src="../../../../../assets/images/cart-icon.png" alt="Cart" />
       </div>
-      <div className={cartActive ? 'cart-container active' : 'cart-container'}>
+      <div
+        className={isCartActive ? 'cart-container active' : 'cart-container'}
+      >
         <div className="cart-content">
           <p>
-            {getTotal().totalQuantity === 0
+            {total.quantity === 0
               ? 'Add some products in the cart :)'
-              : getTotal().totalQuantity}
+              : total.quantity}
           </p>
           {cart.map((elem: any) => {
             const cartItem = elem.item;
@@ -53,13 +58,13 @@ export const Cart = () => {
                   {cartItem.price}
                 </div>
                 <div>
+                  <p>Quantity: {elem.quantity}</p>
                   <button
                     type="button"
                     onClick={() => dispatch(decrementQuantity(cartItem.id))}
                   >
                     -
                   </button>
-                  {elem.quantity}
                   <button
                     type="button"
                     onClick={() => dispatch(incrementQuantity(cartItem.id))}
@@ -76,7 +81,15 @@ export const Cart = () => {
               </div>
             );
           })}
-          <p>{getTotal().totalPrice.toFixed(2)}</p>
+          <div className="subtotal">
+            <p>Subtotal {total.price}</p>
+            <button
+              type="button"
+              onClick={() => alert(`Checkout - subtotal $ ${total.price}`)}
+            >
+              Checkout
+            </button>
+          </div>
         </div>
       </div>
     </div>

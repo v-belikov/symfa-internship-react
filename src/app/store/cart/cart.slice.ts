@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { ICartProduct } from './iproduct';
 
-const decrement = value => {
+const decrement = (value: number): number => {
   if (value === 1) {
     return value;
   }
@@ -8,16 +9,22 @@ const decrement = value => {
   return value - 1;
 };
 
+interface ICartState {
+  cart: ICartProduct[];
+}
+
+const initialState: ICartState = {
+  cart: [],
+};
+
 const cartSlice = createSlice({
   name: 'cart',
-  initialState: {
-    cart: [],
-  },
+  initialState,
   reducers: {
     addToCart: (state, action) => {
-      const itemInCart = state.cart.find(
-        elem => elem.item.id === action.payload.item.id,
-      );
+      const itemInCart = state.cart.find(elem => {
+        return elem.item.id === action.payload.item.id;
+      });
 
       if (itemInCart) {
         itemInCart.quantity += 1;
@@ -30,7 +37,6 @@ const cartSlice = createSlice({
         elem => elem.item.id === action.payload,
       );
 
-      // eslint-disable-next-line no-param-reassign
       state.cart[index] = {
         ...state.cart[index],
         quantity: state.cart[index].quantity + 1,
@@ -41,19 +47,15 @@ const cartSlice = createSlice({
         return element.item.id === action.payload;
       });
 
-      // eslint-disable-next-line no-param-reassign
       state.cart[index] = {
         ...state.cart[index],
         quantity: decrement(state.cart[index].quantity),
       };
     },
     removeItem: (state, action) => {
-      const removeItem = state.cart.filter(item => {
+      state.cart = state.cart.filter(item => {
         return item.item.id !== action.payload;
       });
-
-      // eslint-disable-next-line no-param-reassign
-      state.cart = removeItem;
     },
   },
 });
