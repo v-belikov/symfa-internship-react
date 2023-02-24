@@ -1,28 +1,18 @@
 import React, { FC } from 'react';
-import Button from 'react-bootstrap/Button';
 import { useAppSelector } from 'app/core/hooks';
-import { getGoodsInBasket, InitialStateType } from 'app/store/basket';
+import { getGoodsInBasket } from 'app/store/basket';
+import { GoodItem } from './shopping-basket-item';
 
-export const ShoppingBasket: FC = () => {
+export const ShoppingBasket: FC<any> = () => {
   const goodsInBasket = useAppSelector(getGoodsInBasket);
-
-  const GoodItem: FC = () => {
-    return (
-      <div>
-        <Button variant="dark">+</Button>
-        <Button variant="dark">-</Button>
-        <Button variant="dark">remove</Button>
-      </div>
-    );
-  };
 
   return (
     <div className="shopping-basket wrapper">
       <div>
         {goodsInBasket ? (
           <>
-            {goodsInBasket.map((item: InitialStateType) => {
-              return <GoodItem key={item.id} />;
+            {goodsInBasket.map((item: any) => {
+              return <GoodItem props={item} key={item.id} />;
             })}
           </>
         ) : (
