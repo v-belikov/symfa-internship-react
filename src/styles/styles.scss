@@ -1,1 +1,76 @@
+.wrapper {
+  padding: 0.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
 
+.header {
+  display: flex;
+  justify-content: flex-end;
+
+  & button {
+    width: 75px;
+    height: 75px;
+
+    & img {
+      width: 100%;
+    }
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.gallery {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+
+  &-item {
+    & .card {
+      display: flex;
+      width: 240px;
+      height: 520px;
+
+      &-title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        height: 40%;
+      }
+
+      &-text {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+.filter {
+  width: 25%;
+
+  & .btn-block {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 35px;
+      width: 35px;
+      border-radius: 50%;
+    }
+  }
+}

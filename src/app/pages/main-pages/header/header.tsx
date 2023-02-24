@@ -10,9 +10,7 @@ export const Header: FC = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  // const quantityIncrease = (id: number) => {};
-  // const quantityDecrease = (id: number) => {};
-  // const removeGoods = (id: number) => {};
+  // const [goodsIntoBasket, setGoodsIntoBasket] = useState<any[]>([]);
 
   return (
     <header className="header wrapper">
@@ -25,9 +23,7 @@ export const Header: FC = () => {
         </Offcanvas.Header>
         <Offcanvas.Body>
           <ShoppingBasket
-          // quantityIncrease={quantityIncrease}
-          // quantityDecrease={quantityDecrease}
-          // removeGoods={removeGoods}
+          // goodsIntoBasket={goodsIntoBasket}
           />
         </Offcanvas.Body>
       </Offcanvas>
