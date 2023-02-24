@@ -2,25 +2,13 @@ import React, { FC } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { config } from 'app/core/config/config';
-import { addToBasket, store } from 'app/store/basket';
+import { useAppDispatch } from 'app/core/hooks';
+import { addToBasket } from 'app/store/basket';
 
-export interface GoodPropsType {
-  id: number;
-  title: string;
-  price: number;
-  currencyFormat: string;
-  availableSizes: Array<string>;
-  sku: number;
-  currencyId: string;
-  description: string;
-  installments: number;
-  isFreeShipping: boolean;
-  style: string;
-}
-
-export const GalleryItem: FC<GoodPropsType> = ({ props }) => {
+export const GalleryItem: FC<any> = ({ props }) => {
+  const dispatch = useAppDispatch();
   const addItemToCard = () => {
-    store.dispatch(addToBasket({ props }));
+    dispatch(addToBasket({ props }));
     console.log(props.title, props.price);
   };
 
@@ -39,7 +27,7 @@ export const GalleryItem: FC<GoodPropsType> = ({ props }) => {
             {props.price}
           </Card.Text>
           <div className="d-grid gap-2">
-            <Button onClick={() => addItemToCard({ props })} variant="dark">
+            <Button onClick={() => addItemToCard()} variant="dark">
               Add to cart
             </Button>
           </div>

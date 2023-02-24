@@ -1,10 +1,31 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit';
-import { GoodPropsType } from 'app/pages/main-pages/gallery/gallery-item';
+import { RootState } from '../store';
+
+export interface GoodPropsType {
+  id: number;
+  title: string;
+  price: number;
+  currencyFormat: string;
+  availableSizes: Array<string>;
+  sku: number;
+  currencyId: string;
+  description: string;
+  installments: number;
+  isFreeShipping: boolean;
+  style: string;
+}
 
 export interface InitialStateType extends GoodPropsType {
   quantity: number;
 }
-const initialState: InitialStateType = { basket: [] };
+
+interface BasketType {
+  basket: InitialStateType[];
+}
+
+const initialState: BasketType = {
+  basket: [],
+};
 
 const counterSlice = createSlice({
   name: 'basket',
@@ -25,9 +46,12 @@ const counterSlice = createSlice({
 });
 
 export const { addToBasket } = counterSlice.actions;
+export const basketReducer = counterSlice.reducer;
 
 export const store = configureStore({
   reducer: counterSlice.reducer,
 });
+
+export const getGoodsInBasket = (state: RootState) => state.basket.basket;
 
 store.subscribe(() => console.log(store.getState()));

@@ -4,7 +4,7 @@ import { config } from '../../core/config';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: config.API_URL,
-  paramsSerializer: params => qs.stringify(params, { arrayFormat: 'repeat' }),
+  paramsSerializer: params => qs.stringify(params, { arrayFormat: 'brackets' }),
 });
 
 export const productsApi = createApi({

@@ -1,16 +1,17 @@
 import React, { FC } from 'react';
 import Button from 'react-bootstrap/Button';
+import { AVAILABLE_SIZES } from 'app/core/models/available-sizes.constant';
+
+import './styles.scss';
 
 export const Filter: FC = () => {
-  const btn_list: Array<string> = ['XS', 'S', 'M', 'ML', 'L', 'XL', 'XXL'];
-
   return (
     <div className="filter">
-      Sizes:
+      Sizes
       <div className="btn-block">
-        {btn_list.map((btn: any) => (
-          <Button key={btn} variant="outline-secondary">
-            {btn}
+        {AVAILABLE_SIZES.map((size: string) => (
+          <Button key={size} variant="outline-secondary">
+            {size}
           </Button>
         ))}
       </div>

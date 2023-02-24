@@ -1,11 +1,10 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import Button from 'react-bootstrap/Button';
-import { store } from 'app/store/basket';
+import { useAppSelector } from 'app/core/hooks';
+import { getGoodsInBasket, InitialStateType } from 'app/store/basket';
 
 export const ShoppingBasket: FC = () => {
-  const [goodsInBasket, setGoodsInBasket] = useState([]);
-
-  setGoodsInBasket(store.getState());
+  const goodsInBasket = useAppSelector(getGoodsInBasket);
 
   const GoodItem: FC = () => {
     return (
@@ -20,10 +19,10 @@ export const ShoppingBasket: FC = () => {
   return (
     <div className="shopping-basket wrapper">
       <div>
-        {goodsInBasket.length > 0 ? (
+        {goodsInBasket ? (
           <>
-            {goodsInBasket.map(item => {
-              return <GoodItem key={item} />;
+            {goodsInBasket.map((item: InitialStateType) => {
+              return <GoodItem key={item.id} />;
             })}
           </>
         ) : (

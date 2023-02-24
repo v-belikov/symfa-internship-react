@@ -1,0 +1,19 @@
+.filter {
+  width: 25%;
+
+  & .btn-block {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 35px;
+      width: 35px;
+      border-radius: 50%;
+    }
+  }
+}

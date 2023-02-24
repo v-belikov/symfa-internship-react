@@ -1,0 +1,13 @@
+.header {
+  display: flex;
+  justify-content: flex-end;
+
+  & button {
+    width: 75px;
+    height: 75px;
+
+    & img {
+      width: 100%;
+    }
+  }
+}

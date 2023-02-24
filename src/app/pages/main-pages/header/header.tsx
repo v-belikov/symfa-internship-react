@@ -5,12 +5,12 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import basketiIcon from '../../../../assets/images/shopping-basket.svg';
 import { ShoppingBasket } from '../shopping-basket';
 
+import './styles.scss';
+
 export const Header: FC = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
-  // const [goodsIntoBasket, setGoodsIntoBasket] = useState<any[]>([]);
 
   return (
     <header className="header wrapper">
@@ -22,9 +22,7 @@ export const Header: FC = () => {
           <Offcanvas.Title>Cart</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          <ShoppingBasket
-          // goodsIntoBasket={goodsIntoBasket}
-          />
+          <ShoppingBasket />
         </Offcanvas.Body>
       </Offcanvas>
     </header>
