@@ -6,6 +6,7 @@ import {
   incrementQuantity,
   removeItem,
 } from 'app/store/cart';
+import { ReactComponent as CartLogo } from './cart_icon.svg';
 
 import './cart.scss';
 
@@ -31,7 +32,7 @@ export const Cart = () => {
   return (
     <div className="cart">
       <div className="cart-btn" onClick={() => setCartActive(!isCartActive)}>
-        <img src="../../../../../assets/images/cart-icon.png" alt="Cart" />
+        <CartLogo />
       </div>
       <div
         className={isCartActive ? 'cart-container active' : 'cart-container'}
@@ -82,10 +83,16 @@ export const Cart = () => {
             );
           })}
           <div className="subtotal">
-            <p>Subtotal {total.price}</p>
+            <p>Subtotal {total.price.toFixed(2)}</p>
             <button
               type="button"
-              onClick={() => alert(`Checkout - subtotal $ ${total.price}`)}
+              onClick={() =>
+                alert(
+                  total.price === 0
+                    ? 'Add some product in the cart!'
+                    : `Checkout - subtotal $ ${total.price}`,
+                )
+              }
             >
               Checkout
             </button>

@@ -1,6 +1,8 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { config } from 'app/core/config';
+import { useAppSelector } from 'app/core/hooks';
+import { RootState } from 'app/store';
 import { addToCart } from 'app/store/cart';
 import { useGetProductsQuery } from 'app/store/products';
 
@@ -8,7 +10,14 @@ import './product-card.scss';
 
 export const ProductCards = () => {
   const { data = {}, isLoading } = useGetProductsQuery(null);
+  const sizes = useAppSelector((state: RootState) => state.sizes.sizes);
   const dispatch = useDispatch();
+
+  const isAvailableSizes = (array: Array<string>): boolean => {
+    if (sizes.length === 0) return true;
+
+    return sizes.filter(x => array.includes(x)).length !== 0;
+  };
 
   if (isLoading) {
     return <h1>Loading...</h1>;
@@ -19,7 +28,14 @@ export const ProductCards = () => {
       <p>{data.length} Product(s) found</p>
       <div className="products-container">
         {data.map((item: any) => (
-          <div className="product-item" key={item.id}>
+          <div
+            className={
+              isAvailableSizes(item.availableSizes)
+                ? 'product-item'
+                : 'product-item-hide'
+            }
+            key={item.id}
+          >
             <p
               className={
                 item.isFreeShipping ? 'free-shipping' : 'none-free-shipping'
