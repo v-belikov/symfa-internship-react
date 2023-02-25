@@ -89,6 +89,7 @@ module.exports = {
     'import/no-unresolved': 0,
     'import/no-cycle': 0,
     'import/prefer-default-export': 0,
+    'import/no-named-as-default': 0,
     'import/no-useless-path-segments': 0,
     'import/no-extraneous-dependencies': 1,
     'import/extensions': [

@@ -1,4 +1,5 @@
-import React, { Dispatch, FC, SetStateAction } from 'react';
+import React, { FC } from 'react';
+import { config } from 'app/core/config/config';
 import { useGetProductsQuery } from 'app/store/products/products-api';
 import { Products } from '../../goods';
 
@@ -6,73 +7,56 @@ import './cards.scss';
 
 interface Sizes {
   filterSizes: string[];
-  setproductsAddedCart: Dispatch<SetStateAction<Products[]>>;
+  addToCart: (i: Products) => void;
 }
-export const Cards: FC<Sizes> = ({
-  filterSizes,
-  setproductsAddedCart,
-}: Sizes) => {
-  const { data: products } = useGetProductsQuery('products');
-  let filteredProducts: never[] = [];
-  let filteradProductsArr: never[] = [];
-
-  filteredProducts = products?.map((i: { availableSizes: string[][] }) =>
-    i.availableSizes.some((r: any) => filterSizes.includes(r)),
-  );
-
-  filteradProductsArr = products?.filter(
-    (i: never, ind: number) => filteredProducts[ind] === true,
-  );
-
-  const handleClick = (i: Products) => {
-    setproductsAddedCart((prev: Products[]) => {
-      return prev ? [...prev, i] : [i];
-    });
-  };
+export const Cards: FC<Sizes> = ({ filterSizes, addToCart }: Sizes) => {
+  const { data: products = [] } = useGetProductsQuery({
+    availableSizes: filterSizes,
+  });
 
   return (
     <div className="goods-cards">
-      <div>{products?.length} Product(s) found</div>
+      <div>{products.length} Product(s) found</div>
       <div className="cards">
-        {(filteradProductsArr?.length === 0
-          ? products
-          : filteradProductsArr
-        )?.map((i: any) => (
-          <div key={i.title} className="card">
-            <div>
-              {i.isFreeShipping === true ? (
-                <div className="isFreeShipping">Free Shipping</div>
-              ) : (
-                ''
-              )}
+        {products.map((product: Products) => {
+          const [priceWholePart, priceFaction] = product.price
+            .toFixed(2)
+            .split('.');
+
+          return (
+            <div key={product.title} className="card-item">
+              <div className="card-item-image">
+                {product.isFreeShipping ? (
+                  <div className="is-free-shipping">Free Shipping</div>
+                ) : null}
+                <img
+                  src={`${config.API_URL}/images/products/${product.sku}-1-cart.webp`}
+                  alt=""
+                />
+              </div>
+              <p className="card-item-title">{product.title}</p>
+              <div className="card-item-price">
+                {product.currencyFormat}
+                <span className="card-item-price bold"> {priceWholePart}</span>.
+                {priceFaction}
+                <div className="card-item-price-parts">
+                  or {product.installments} x
+                  <span className="bold">
+                    {product.currencyFormat}
+                    {(product.price / product.installments).toFixed(2)}
+                  </span>
+                </div>
+              </div>
+              <button
+                type="button"
+                className="card-item-add-button"
+                onClick={() => addToCart(product)}
+              >
+                Add to card
+              </button>
             </div>
-            <img
-              className="card-image"
-              src={`http://54.175.134.132/images/products/${i.sku}-1-cart.webp`}
-              alt=""
-            />
-            <p className="title">{i.title}</p>
-            <div className="price">
-              {i.currencyFormat}
-              <span className="price-bold"> {Math.floor(i.price)}</span>
-              {String((i.price - Math.floor(i.price)).toFixed(2)).slice(1)}
-            </div>
-            <div className="price-parts">
-              or {i.installments} x
-              <span className="price-parts-bold">
-                {i.currencyFormat}
-                {(i.price / i.installments).toFixed(2)}
-              </span>
-            </div>
-            <button
-              type="button"
-              className="add-button"
-              onClick={() => handleClick(i)}
-            >
-              Add to card
-            </button>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

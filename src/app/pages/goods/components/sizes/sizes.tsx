@@ -1,4 +1,5 @@
 import React, { Dispatch, FC, SetStateAction } from 'react';
+import { sizes } from 'app/core/models/sizes.constant';
 
 import './sizes.scss';
 
@@ -7,22 +8,12 @@ interface FilterSizes {
 }
 
 export const Sizes: FC<FilterSizes> = ({ setFilterSizes }: FilterSizes) => {
-  const sizes = ['XS', 'S', 'M', 'ML', 'L', 'XL', 'XXL'];
-
   const handleClick = (size: string) => {
-    setFilterSizes((prev: string[]) => {
-      let result: string | string[] = [];
-
-      if (prev.includes(size)) {
-        result = prev.filter(i => i !== size);
-      } else if (prev) {
-        result = [...prev, size];
-      } else {
-        result = [size];
-      }
-
-      return result;
-    });
+    setFilterSizes(prev =>
+      prev.includes(size)
+        ? prev.filter(prevSize => prevSize === size)
+        : [...prev, size],
+    );
   };
 
   return (

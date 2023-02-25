@@ -1,36 +1,44 @@
 import React, { Dispatch, FC, SetStateAction, useState } from 'react';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useAppSelector } from 'app/core/hooks';
+import { RootState } from 'app/store';
 import { Products } from '../../goods';
 import { OpenCart } from './components/openCart';
 
 import './cart.scss';
 
 interface CartProducts {
-  productsAddedCart: Products[];
-  setproductsAddedCart: Dispatch<SetStateAction<Products[]>>;
+  addToCart: (i: Products) => void;
+  resPrice: number;
+  setResPrice: Dispatch<SetStateAction<number>>;
 }
 export const Cart: FC<CartProducts> = ({
-  productsAddedCart,
-  setproductsAddedCart,
+  addToCart,
+  resPrice,
+  setResPrice,
 }: CartProducts) => {
-  const [menuActive, setMenuActive] = useState(false);
+  const [menuActive, setMenuActive] = useState<boolean>(false);
+  const productsInCart = useAppSelector(
+    (state: RootState) => state.cart.productsInCart,
+  );
 
   return (
-    <div className={menuActive ? 'cart active' : 'cart'}>
+    <div className={menuActive ? 'cart' : 'cart active'}>
       <button
         type="button"
         className="cart_button"
         onClick={() => setMenuActive(!menuActive)}
       >
         <FontAwesomeIcon icon={faCartShopping} color="white" />
-        <div className="counts-products">
-          <span>{productsAddedCart.length}</span>
+        <div className="cart_button-counts-products">
+          <span>{productsInCart.length}</span>
         </div>
       </button>
       <OpenCart
-        productsAddedCart={productsAddedCart}
-        setproductsAddedCart={setproductsAddedCart}
+        addToCart={addToCart}
+        resPrice={resPrice}
+        setResPrice={setResPrice}
       />
     </div>
   );

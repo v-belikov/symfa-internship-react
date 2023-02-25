@@ -1,29 +1,40 @@
 import React, { Dispatch, FC, SetStateAction } from 'react';
 import { faCartShopping, faClose } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { config } from 'app/core/config/config';
+import { useAppDispatch, useAppSelector } from 'app/core/hooks';
+import { RootState } from 'app/store';
+import {
+  dropProductFromCart,
+  removeQuantityCartProduct,
+} from 'app/store/products/cart-slice';
 import { Products } from '../../../goods';
 
 import './openCart.scss';
 
 interface CartProducts {
-  productsAddedCart: Products[];
-  setproductsAddedCart: Dispatch<SetStateAction<Products[]>>;
+  addToCart: (i: Products) => void;
+  resPrice: number;
+  setResPrice: Dispatch<SetStateAction<number>>;
 }
 export const OpenCart: FC<CartProducts> = ({
-  productsAddedCart,
-  setproductsAddedCart,
+  addToCart,
+  resPrice,
+  setResPrice,
 }: CartProducts) => {
-  const arrPrice: any[] = [];
-  let resPrice = 0;
+  const productsInCart = useAppSelector(
+    (state: RootState) => state.cart.productsInCart,
+  );
 
-  productsAddedCart?.map((i: any) => arrPrice.push(i.price));
+  const dispatch = useAppDispatch();
 
-  if (arrPrice.length) {
-    resPrice = arrPrice?.reduce((prev: number, curr: number) => prev + curr);
-  }
+  const dropProductFromCart1 = (i: Products) => {
+    dispatch(dropProductFromCart(i) as any);
+  };
 
-  const dropProduct = (i: Products) => {
-    setproductsAddedCart(prev => prev?.filter(j => j !== i));
+  const remove = (i: Products) => {
+    setResPrice(resPrice - i.price);
+    dispatch(removeQuantityCartProduct(i));
   };
 
   return (
@@ -35,67 +46,82 @@ export const OpenCart: FC<CartProducts> = ({
         <span className="cart-name">Cart</span>
       </div>
       <div className="cart-open-content">
-        {productsAddedCart?.map((i: any) => (
-          <div key={i.title} className="cart-open-main">
+        {productsInCart?.map((i: any) => (
+          <div key={i.title} className="cart-open-card">
             <img
-              className="card-open-image"
-              src={`http://54.175.134.132/images/products/${i.sku}-1-cart.webp`}
+              className="cart-open-card-image"
+              src={`${config.API_URL}/images/products/${i.sku}-1-cart.webp`}
               alt=""
             />
-            <div className="added-card-info">
+            <div className="cart-open-card-info">
               <div>{i.title}</div>
-              <div>
-                {i.availableSizes[0]} | {i.style}
+              <div className="cart-open-card-info-discription">
+                <div>
+                  {i.availableSizes[0]} | {i.style}
+                </div>
+                <div>Quantity: {i.amount}</div>
               </div>
-              <div>Quantity: 1</div>
             </div>
-            <div className="added-card-actions">
+            <div className="cart-open-card-actions">
               <button
                 type="button"
-                className="drop-card"
-                onClick={() => dropProduct(i)}
+                className="cart-open-card-close"
+                onClick={() => dropProductFromCart1(i)}
               >
                 <FontAwesomeIcon icon={faClose} size="2x" />
               </button>
-              <div className="added-card-price">
+              <div className="cart-open-card-price">
                 {i.currencyFormat} {i.price.toFixed(2)}
               </div>
-              <button type="button" className="one-card_button drop">
-                -
-              </button>
-              <button type="button" className="one-card_button add">
-                +
-              </button>
+              <div className="cart-open-card-buttons-changing">
+                <button
+                  type="button"
+                  className="cart-open-card_button drop"
+                  onClick={
+                    i.amount === 1
+                      ? () => dropProductFromCart1(i)
+                      : () => remove(i)
+                  }
+                >
+                  -
+                </button>
+                <button
+                  type="button"
+                  className="cart-open-card_button add"
+                  onClick={() => addToCart(i)}
+                >
+                  +
+                </button>
+              </div>
             </div>
           </div>
         ))}
-        <div className="cart-open-footer">
-          <div className="info-added-product">
-            <div>SUBTOTAL</div>
-            <div>
-              <div className="added-product-price">$ {resPrice.toFixed(2)}</div>
-              <div className="added-product-price-parts">
-                {productsAddedCart.length
-                  ? `OR UP TO ${
-                      productsAddedCart[productsAddedCart.length - 1]
-                        .installments
-                    } x ${
-                      productsAddedCart[productsAddedCart.length - 1]
-                        .currencyFormat
-                    } ${(
-                      resPrice /
-                      productsAddedCart[productsAddedCart.length - 1]
-                        .installments
-                    ).toFixed(2)}`
-                  : ''}
-              </div>
+      </div>
+      <div className="cart-open-footer">
+        <div className="cart-open-footer-info">
+          <div className="cart-open-footer-subtotal">SUBTOTAL</div>
+          <div className="cart-open-footer-price-info">
+            <div className="cart-open-footer-price">
+              $ {resPrice.toFixed(2)}
+            </div>
+            <div className="cart-open-footer-price-parts">
+              {productsInCart.length
+                ? `OR UP TO ${
+                    productsInCart[productsInCart.length - 1].installments
+                  } x ${
+                    productsInCart[productsInCart.length - 1].currencyFormat
+                  } ${(
+                    resPrice /
+                    productsInCart[productsInCart.length - 1].installments
+                  ).toFixed(2)}`
+                : ''}
             </div>
           </div>
-
-          <button type="button" className="checkout_button">
-            CHECKOUT
-          </button>
         </div>
+
+        <button type="button" className="cart-open-footer-checkout_button">
+          CHECKOUT
+        </button>
       </div>
     </div>
   );
