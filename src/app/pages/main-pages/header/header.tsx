@@ -12,6 +12,18 @@ export const Header: FC = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  // const [totalPrice, setTotalPrice] = useState<number>(0);
+
+  // const TotalPriceGoodsInBasket = (): void => {
+  //   const goodsInBasket = useAppSelector(getGoodsInBasket);
+
+  //   goodsInBasket.map((item: any) => {
+  //     return item.price;
+  //   });
+  // };
+
+  // setTotalPrice(TotalPriceGoodsInBasket);
+
   return (
     <header className="header wrapper">
       <Button variant="light" onClick={handleShow}>
@@ -23,6 +35,7 @@ export const Header: FC = () => {
         </Offcanvas.Header>
         <Offcanvas.Body>
           <ShoppingBasket />
+          <h5 className="header__total_price">total price: </h5>
         </Offcanvas.Body>
       </Offcanvas>
     </header>

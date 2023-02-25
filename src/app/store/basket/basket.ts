@@ -32,9 +32,11 @@ const counterSlice = createSlice({
   initialState,
   reducers: {
     addToBasket: (state, action) => {
-      const currentGoods = state.basket.find((item: any) => {
-        return item.props.id === action.payload.props.id;
-      });
+      const currentGoods = state.basket.find(
+        ({ ...item }: InitialStateType) => {
+          return item.id === action.payload.id;
+        },
+      );
 
       if (currentGoods) {
         currentGoods.quantity += 1;
@@ -42,10 +44,50 @@ const counterSlice = createSlice({
         state.basket.push({ ...action.payload, quantity: 1 });
       }
     },
+
+    // changeQuantity: (state: RootState, currentGoods: number, step: number) => {
+    //   state.basket[currentGoods] = {
+    //     ...state.basket[currentGoods],
+    //     quantity: state.basket[currentGoods].quantity + step,
+    //   };
+    // },
+
+    increaseQuantity: (state, action) => {
+      const currentGoods = state.basket.findIndex(
+        ({ ...item }: InitialStateType) => item.id === action.payload,
+      );
+
+      // eslint-disable-next-line no-param-reassign
+      state.basket[currentGoods] = {
+        ...state.basket[currentGoods],
+
+        quantity: state.basket[currentGoods].quantity + 1,
+      };
+    },
+
+    decreaseQuantity: (state, action) => {
+      const currentGoods = state.basket.findIndex(
+        ({ ...item }: InitialStateType) => item.id === action.payload,
+      );
+
+      // eslint-disable-next-line no-param-reassign
+      state.basket[currentGoods] = {
+        ...state.basket[currentGoods],
+        quantity: state.basket[currentGoods].quantity - 1,
+      };
+    },
+
+    removeGoods: (state, action) => {
+      // eslint-disable-next-line no-param-reassign
+      state.basket = state.basket.filter(({ ...item }: InitialStateType) => {
+        return item.id !== action.payload;
+      });
+    },
   },
 });
 
-export const { addToBasket } = counterSlice.actions;
+export const { addToBasket, increaseQuantity, decreaseQuantity, removeGoods } =
+  counterSlice.actions;
 export const basketReducer = counterSlice.reducer;
 
 export const store = configureStore({
@@ -53,5 +95,3 @@ export const store = configureStore({
 });
 
 export const getGoodsInBasket = (state: RootState) => state.basket.basket;
-
-store.subscribe(() => console.log(store.getState()));

@@ -8,7 +8,7 @@ import { addToBasket } from 'app/store/basket';
 export const GalleryItem: FC<any> = ({ props }) => {
   const dispatch = useAppDispatch();
   const addItemToCard = () => {
-    dispatch(addToBasket({ props }));
+    dispatch(addToBasket(props));
     console.log(props.title, props.price);
   };
 
