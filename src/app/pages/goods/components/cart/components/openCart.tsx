@@ -1,41 +1,24 @@
-import React, { Dispatch, FC, SetStateAction } from 'react';
+import React, { FC } from 'react';
 import { faCartShopping, faClose } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { config } from 'app/core/config/config';
 import { useAppDispatch, useAppSelector } from 'app/core/hooks';
-import { RootState } from 'app/store';
+import { Product } from 'app/store/products';
 import {
   dropProductFromCart,
+  getProductsInCart,
   removeQuantityCartProduct,
+  setCartProducts,
 } from 'app/store/products/cart-slice';
-import { Products } from '../../../goods';
 
-import './openCart.scss';
+export const OpenCart: FC = () => {
+  const productsInCart = useAppSelector(getProductsInCart);
 
-interface CartProducts {
-  addToCart: (i: Products) => void;
-  resPrice: number;
-  setResPrice: Dispatch<SetStateAction<number>>;
-}
-export const OpenCart: FC<CartProducts> = ({
-  addToCart,
-  resPrice,
-  setResPrice,
-}: CartProducts) => {
-  const productsInCart = useAppSelector(
-    (state: RootState) => state.cart.productsInCart,
-  );
+  const resultPrice = productsInCart.reduce((acc: number, i: Product) => {
+    return acc + i.price * i.amount;
+  }, 0);
 
   const dispatch = useAppDispatch();
-
-  const dropProductFromCart1 = (i: Products) => {
-    dispatch(dropProductFromCart(i) as any);
-  };
-
-  const remove = (i: Products) => {
-    setResPrice(resPrice - i.price);
-    dispatch(removeQuantityCartProduct(i));
-  };
 
   return (
     <div className="cart-open">
@@ -46,49 +29,45 @@ export const OpenCart: FC<CartProducts> = ({
         <span className="cart-name">Cart</span>
       </div>
       <div className="cart-open-content">
-        {productsInCart?.map((i: any) => (
-          <div key={i.title} className="cart-open-card">
+        {productsInCart.map((product: Product) => (
+          <div key={product.title} className="cart-open-card">
             <img
               className="cart-open-card-image"
-              src={`${config.API_URL}/images/products/${i.sku}-1-cart.webp`}
+              src={`${config.API_URL}/images/products/${product.sku}-1-cart.webp`}
               alt=""
             />
             <div className="cart-open-card-info">
-              <div>{i.title}</div>
+              <div>{product.title}</div>
               <div className="cart-open-card-info-discription">
                 <div>
-                  {i.availableSizes[0]} | {i.style}
+                  {product.availableSizes[0]} | {product.style}
                 </div>
-                <div>Quantity: {i.amount}</div>
+                <div>Quantity: {product.amount}</div>
               </div>
             </div>
             <div className="cart-open-card-actions">
               <button
                 type="button"
                 className="cart-open-card-close"
-                onClick={() => dropProductFromCart1(i)}
+                onClick={() => dispatch(dropProductFromCart(product))}
               >
                 <FontAwesomeIcon icon={faClose} size="2x" />
               </button>
               <div className="cart-open-card-price">
-                {i.currencyFormat} {i.price.toFixed(2)}
+                {product.currencyFormat} {product.price.toFixed(2)}
               </div>
               <div className="cart-open-card-buttons-changing">
                 <button
                   type="button"
                   className="cart-open-card_button drop"
-                  onClick={
-                    i.amount === 1
-                      ? () => dropProductFromCart1(i)
-                      : () => remove(i)
-                  }
+                  onClick={() => dispatch(removeQuantityCartProduct(product))}
                 >
                   -
                 </button>
                 <button
                   type="button"
                   className="cart-open-card_button add"
-                  onClick={() => addToCart(i)}
+                  onClick={() => dispatch(setCartProducts(product))}
                 >
                   +
                 </button>
@@ -102,7 +81,7 @@ export const OpenCart: FC<CartProducts> = ({
           <div className="cart-open-footer-subtotal">SUBTOTAL</div>
           <div className="cart-open-footer-price-info">
             <div className="cart-open-footer-price">
-              $ {resPrice.toFixed(2)}
+              $ {resultPrice.toFixed(2)}
             </div>
             <div className="cart-open-footer-price-parts">
               {productsInCart.length
@@ -111,7 +90,7 @@ export const OpenCart: FC<CartProducts> = ({
                   } x ${
                     productsInCart[productsInCart.length - 1].currencyFormat
                   } ${(
-                    resPrice /
+                    resultPrice /
                     productsInCart[productsInCart.length - 1].installments
                   ).toFixed(2)}`
                 : ''}

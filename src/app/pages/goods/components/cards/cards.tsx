@@ -1,24 +1,27 @@
 import React, { FC } from 'react';
 import { config } from 'app/core/config/config';
+import { useAppDispatch } from 'app/core/hooks';
+import { Product } from 'app/store/products';
+import { setCartProducts } from 'app/store/products/cart-slice';
 import { useGetProductsQuery } from 'app/store/products/products-api';
-import { Products } from '../../goods';
 
 import './cards.scss';
 
 interface Sizes {
   filterSizes: string[];
-  addToCart: (i: Products) => void;
 }
-export const Cards: FC<Sizes> = ({ filterSizes, addToCart }: Sizes) => {
+export const Cards: FC<Sizes> = ({ filterSizes }: Sizes) => {
   const { data: products = [] } = useGetProductsQuery({
     availableSizes: filterSizes,
   });
+
+  const dispatch = useAppDispatch();
 
   return (
     <div className="goods-cards">
       <div>{products.length} Product(s) found</div>
       <div className="cards">
-        {products.map((product: Products) => {
+        {products.map((product: Product) => {
           const [priceWholePart, priceFaction] = product.price
             .toFixed(2)
             .split('.');
@@ -50,7 +53,7 @@ export const Cards: FC<Sizes> = ({ filterSizes, addToCart }: Sizes) => {
               <button
                 type="button"
                 className="card-item-add-button"
-                onClick={() => addToCart(product)}
+                onClick={() => dispatch(setCartProducts(product))}
               >
                 Add to card
               </button>

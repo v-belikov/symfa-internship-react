@@ -1,46 +1,56 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Products } from 'app/pages/goods';
+import { RootState } from 'app/store';
+import { Product } from './models';
 
 export const cartSlice = createSlice({
   name: 'cart',
   initialState: {
-    productsInCart: [] as Products[],
+    productsInCart: [] as Product[],
   },
   reducers: {
-    setCartProducts: (state, action: PayloadAction<Products>) => {
-      state.productsInCart.push({
-        ...action.payload,
-        amount: 1,
-      });
-    },
-    addQuantityCartProduct: (state, action: PayloadAction<Products>) => {
-      state.productsInCart.map(item =>
-        item.id === action.payload.id
-          ? {
-              ...item,
-              amount: item.amount + 1,
-            }
-          : item,
+    setCartProducts: (state, action: PayloadAction<Product>) => {
+      const productInCart = state.productsInCart.find(
+        item => item.id === action.payload.id,
       );
+
+      if (productInCart) {
+        productInCart.amount += 1;
+      } else {
+        state.productsInCart.push({
+          ...action.payload,
+          amount: 1,
+        });
+      }
     },
-    removeQuantityCartProduct: (state, action: PayloadAction<Products>) => {
-      state.productsInCart.map(item =>
-        item.id === action.payload.id
-          ? {
-              ...item,
-              amount: item.amount - 1,
-            }
-          : item,
+    removeQuantityCartProduct: (state, action: PayloadAction<Product>) => {
+      if (action.payload.amount === 1) {
+        state.productsInCart.splice(
+          state.productsInCart.indexOf(action.payload) - 1,
+          1,
+        );
+      } else {
+        for (const product of state.productsInCart) {
+          if (product.id === action.payload.id) {
+            product.amount -= 1;
+
+            break;
+          }
+        }
+      }
+    },
+    dropProductFromCart: (state, action: PayloadAction<Product>) => {
+      state.productsInCart.splice(
+        state.productsInCart.indexOf(action.payload) - 1,
+        1,
       );
-    },
-    dropProductFromCart: (state, action: PayloadAction<Products>) => {
-      state.productsInCart.filter(i => i !== action.payload);
     },
   },
 });
 
+export const getProductsInCart = (state: RootState) =>
+  state.cart.productsInCart;
+
 export const {
-  addQuantityCartProduct,
   dropProductFromCart,
   removeQuantityCartProduct,
   setCartProducts,

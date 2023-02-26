@@ -1,27 +1,15 @@
-import React, { Dispatch, FC, SetStateAction, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAppSelector } from 'app/core/hooks';
-import { RootState } from 'app/store';
-import { Products } from '../../goods';
+import { getProductsInCart } from 'app/store/products/cart-slice';
 import { OpenCart } from './components/openCart';
 
 import './cart.scss';
 
-interface CartProducts {
-  addToCart: (i: Products) => void;
-  resPrice: number;
-  setResPrice: Dispatch<SetStateAction<number>>;
-}
-export const Cart: FC<CartProducts> = ({
-  addToCart,
-  resPrice,
-  setResPrice,
-}: CartProducts) => {
+export const Cart: FC = () => {
   const [menuActive, setMenuActive] = useState<boolean>(false);
-  const productsInCart = useAppSelector(
-    (state: RootState) => state.cart.productsInCart,
-  );
+  const productsInCart = useAppSelector(getProductsInCart);
 
   return (
     <div className={menuActive ? 'cart' : 'cart active'}>
@@ -35,11 +23,7 @@ export const Cart: FC<CartProducts> = ({
           <span>{productsInCart.length}</span>
         </div>
       </button>
-      <OpenCart
-        addToCart={addToCart}
-        resPrice={resPrice}
-        setResPrice={setResPrice}
-      />
+      <OpenCart />
     </div>
   );
 };

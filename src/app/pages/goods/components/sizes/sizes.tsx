@@ -1,5 +1,5 @@
 import React, { Dispatch, FC, SetStateAction } from 'react';
-import { sizes } from 'app/core/models/sizes.constant';
+import { SIZES } from 'app/core/models/sizes.constant';
 
 import './sizes.scss';
 
@@ -20,7 +20,7 @@ export const Sizes: FC<FilterSizes> = ({ setFilterSizes }: FilterSizes) => {
     <div className="sizes">
       <p className="sizes-head">Sizes:</p>
       <div className="sizes-buttons">
-        {sizes.map(size => (
+        {SIZES.map(size => (
           <button
             key={size}
             type="button"
