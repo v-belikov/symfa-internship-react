@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { InitialStateType } from 'app/store/basket';
 import { useGetProductsQuery } from 'app/store/products';
 import { GalleryItem } from './gallery-item';
 
@@ -17,7 +18,7 @@ export const Gallery: FC = () => {
     <div className="gallery">
       {error
         ? messageError
-        : data.map((item: any) => {
+        : data.map((item: InitialStateType) => {
             return <GalleryItem props={item} key={item.id} />;
           })}
     </div>

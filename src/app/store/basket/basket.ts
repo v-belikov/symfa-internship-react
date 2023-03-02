@@ -1,3 +1,4 @@
+/* eslint no-param-reassign: ["error", { "props": true, "ignorePropertyModificationsForRegex": ["^state"] }] */
 import { configureStore, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 
@@ -57,10 +58,8 @@ const counterSlice = createSlice({
         ({ ...item }: InitialStateType) => item.id === action.payload,
       );
 
-      // eslint-disable-next-line no-param-reassign
       state.basket[currentGoods] = {
         ...state.basket[currentGoods],
-
         quantity: state.basket[currentGoods].quantity + 1,
       };
     },
@@ -70,7 +69,6 @@ const counterSlice = createSlice({
         ({ ...item }: InitialStateType) => item.id === action.payload,
       );
 
-      // eslint-disable-next-line no-param-reassign
       state.basket[currentGoods] = {
         ...state.basket[currentGoods],
         quantity: state.basket[currentGoods].quantity - 1,
@@ -78,7 +76,6 @@ const counterSlice = createSlice({
     },
 
     removeGoods: (state, action) => {
-      // eslint-disable-next-line no-param-reassign
       state.basket = state.basket.filter(({ ...item }: InitialStateType) => {
         return item.id !== action.payload;
       });
