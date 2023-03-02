@@ -28,6 +28,7 @@ export const Login: FC = () => {
       <Form labelCol={{ span: 5 }}>
         <Form.Item
           label="Email"
+          name="email"
           required
           rules={[{ required: true, type: 'email' }]}
         >
