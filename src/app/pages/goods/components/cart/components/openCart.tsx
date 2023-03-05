@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { faCartShopping, faClose } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { config } from 'app/core/config/config';
+// import { config } from 'app/core/config/config';
 import { useAppDispatch, useAppSelector } from 'app/core/hooks';
 import { Product } from 'app/store/products';
 import {
@@ -31,10 +31,11 @@ export const OpenCart: FC = () => {
       <div className="cart-open-content">
         {productsInCart.map((product: Product) => (
           <div key={product.title} className="cart-open-card">
-            <img
+            <input
+              type="image"
               className="cart-open-card-image"
-              src={`${config.API_URL}/images/products/${product.sku}-1-cart.webp`}
-              alt=""
+              src={`http://54.175.134.132/${product.imageCart.path}`}
+              alt="image"
             />
             <div className="cart-open-card-info">
               <div>{product.title}</div>

@@ -1,9 +1,10 @@
 import React, { FC } from 'react';
-import { config } from 'app/core/config/config';
+// import { config } from 'app/core/config/config';
 import { useAppDispatch } from 'app/core/hooks';
 import { Product } from 'app/store/products';
 import { setCartProducts } from 'app/store/products/cart-slice';
 import { useGetProductsQuery } from 'app/store/products/products-api';
+import { ImagesPreview } from '../image-preview/image-preview';
 
 import './cards.scss';
 
@@ -17,6 +18,8 @@ export const Cards: FC<Sizes> = ({ filterSizes }: Sizes) => {
 
   const dispatch = useAppDispatch();
 
+  console.log(products);
+
   return (
     <div className="goods-cards">
       <div>{products.length} Product(s) found</div>
@@ -27,15 +30,12 @@ export const Cards: FC<Sizes> = ({ filterSizes }: Sizes) => {
             .split('.');
 
           return (
-            <div key={product.title} className="card-item">
+            <div key={product.id} className="card-item">
               <div className="card-item-image">
                 {product.isFreeShipping ? (
                   <div className="is-free-shipping">Free Shipping</div>
                 ) : null}
-                <img
-                  src={`${config.API_URL}/images/products/${product.sku}-1-cart.webp`}
-                  alt=""
-                />
+                <ImagesPreview images={product.imagePreview} />
               </div>
               <p className="card-item-title">{product.title}</p>
               <div className="card-item-price">

@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
-import { Goods } from '../../pages/goods/goods';
+import { Outlet } from 'react-router-dom';
 
 export const MainLayout: FC = () => {
   return (
     <div>
-      <Goods />
+      <Outlet />
     </div>
   );
 };
