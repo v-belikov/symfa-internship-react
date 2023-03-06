@@ -71,7 +71,11 @@ const counterSlice = createSlice({
 
       state.basket[currentGoods] = {
         ...state.basket[currentGoods],
-        quantity: state.basket[currentGoods].quantity - 1,
+
+        quantity:
+          state.basket[currentGoods].quantity >= 2
+            ? state.basket[currentGoods].quantity - 1
+            : state.basket[currentGoods].quantity,
       };
     },
 

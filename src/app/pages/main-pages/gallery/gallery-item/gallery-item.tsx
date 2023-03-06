@@ -17,7 +17,7 @@ export const GalleryItem: FC<any> = ({ props }) => {
       <Card>
         <Card.Img
           variant="top"
-          src={`${config.API_URL}/images/products/${props.sku}-1-cart.webp`}
+          src={`${config.API_URL}/images/products/${props.sku}-1-product.webp`}
           alt="Card image"
         />
         <Card.Body>
