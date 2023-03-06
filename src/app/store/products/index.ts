@@ -1,2 +1,2 @@
 export * from './products-api';
-export type { Product } from './models/product';
+export type { Product } from './models';

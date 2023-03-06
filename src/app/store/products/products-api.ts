@@ -1,9 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import * as qs from 'qs';
-import { config } from '../../core/config';
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: config.API_URL,
+  baseUrl: 'http://localhost:9040/',
   paramsSerializer: params => qs.stringify(params, { arrayFormat: 'brackets' }),
 });
 

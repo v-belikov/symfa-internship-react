@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-// import { config } from 'app/core/config/config';
 import { useAppDispatch } from 'app/core/hooks';
 import { Product } from 'app/store/products';
 import { setCartProducts } from 'app/store/products/cart-slice';
@@ -17,8 +16,6 @@ export const Cards: FC<Sizes> = ({ filterSizes }: Sizes) => {
   });
 
   const dispatch = useAppDispatch();
-
-  console.log(products);
 
   return (
     <div className="goods-cards">

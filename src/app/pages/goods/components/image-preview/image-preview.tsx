@@ -1,13 +1,15 @@
 import React, { FC, useState } from 'react';
-// import { config } from 'app/core/config/config';
+import { config } from 'app/core/config/config';
 import { ImagePreview } from 'app/store/products/models';
 
 import './image-preview.scss';
 
-interface Images {
+interface IImagePreviewProps {
   images: ImagePreview[];
 }
-export const ImagesPreview: FC<Images> = ({ images }: Images) => {
+export const ImagesPreview: FC<IImagePreviewProps> = ({
+  images,
+}: IImagePreviewProps) => {
   const [activeImageOrder, setActiveImageOrder] = useState<number>(0);
   const moveActiveOrder = () => {
     setActiveImageOrder((prevState: number) => (prevState + 1) % images.length);
@@ -16,14 +18,14 @@ export const ImagesPreview: FC<Images> = ({ images }: Images) => {
   return (
     <div
       className="image-preview"
-      onMouseEnter={() => moveActiveOrder()}
-      onMouseLeave={() => moveActiveOrder()}
+      onMouseEnter={moveActiveOrder}
+      onMouseLeave={moveActiveOrder}
     >
       {images.map((image: ImagePreview) => (
         <img
-          src={`http://54.175.134.132/${image.path}`}
+          src={`${config.API_URL}${image.path}`}
           className={`image-preview-item ${
-            activeImageOrder === image.order ? '' : 'active'
+            activeImageOrder === image.order ? '' : 'hidden'
           }`}
           alt=""
           key={image.path}

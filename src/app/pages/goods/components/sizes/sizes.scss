@@ -8,10 +8,9 @@
     display: flex;
     flex-wrap: wrap;
     width: 210px;
-  }
 
-  &-buttons_button {
-    display: flex;
+    &_button{
+      display: flex;
     justify-content: center;
     align-items: center;
     width: 35px;
@@ -30,6 +29,7 @@
     &:focus {
       background-color: black;
       color: white;
+    }
     }
   }
 }

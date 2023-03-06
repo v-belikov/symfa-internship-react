@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
-import { Cards } from './components/cards/cards';
-import { Cart } from './components/cart';
-import { Sizes } from './components/sizes';
+import { Cards } from './components/cards/index';
+import { Cart } from './components/cart/index';
+import { Sizes } from './components/sizes/index';
 
 import './goods.scss';
 

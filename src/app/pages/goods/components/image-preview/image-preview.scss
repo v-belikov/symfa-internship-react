@@ -1,10 +1,11 @@
-.image-preview{
+.image-preview {
+  &-item {
     display: block;
-}
-.image-preview .active{
-    display: none;
-}
-.image-preview img{
     width: 220px;
     height: 320px;
+
+    &.hidden {
+      display: none;
+    }
+  }
 }
