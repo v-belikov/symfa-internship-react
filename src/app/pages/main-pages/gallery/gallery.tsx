@@ -8,6 +8,8 @@ import './styles.scss';
 export const Gallery: FC = () => {
   const { data, error, isLoading } = useGetProductsQuery('products');
 
+  console.log(data);
+
   const messageError = error ? 'error' : 'isLoading';
 
   if (isLoading) {

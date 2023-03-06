@@ -9,7 +9,7 @@ export const GalleryItem: FC<any> = ({ props }) => {
   const dispatch = useAppDispatch();
   const addItemToCard = () => {
     dispatch(addToBasket(props));
-    console.log(props.title, props.price);
+    console.log(props.title, props.price, props.id);
   };
 
   return (
