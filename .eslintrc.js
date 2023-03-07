@@ -32,6 +32,7 @@ module.exports = {
     'react-hooks',
   ],
   rules: {
+    'no-param-reassign': 0,
     'react/jsx-key': 1,
     '@typescript-eslint/typedef': 2,
     '@typescript-eslint/no-inferrable-types': 0,
@@ -40,6 +41,16 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': [
       2,
       { argsIgnorePattern: '^_|^req|^next', ignoreRestSiblings: true },
+    ],
+    'jsx-a11y/label-has-associated-control': [
+      'off',
+      {
+        labelComponents: [],
+        labelAttributes: [],
+        controlComponents: [],
+        assert: 'both',
+        depth: 25,
+      },
     ],
     '@typescript-eslint/no-explicit-any': 0,
     '@typescript-eslint/explicit-module-boundary-types': 0,
