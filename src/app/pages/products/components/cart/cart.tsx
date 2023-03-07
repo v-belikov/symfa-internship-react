@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import { config } from 'app/core/config';
 import { useAppDispatch, useAppSelector } from 'app/core/hooks';
 import { RootState } from 'app/store';
 import {
@@ -49,7 +50,7 @@ export const Cart = () => {
             return (
               <div key={elem.id}>
                 <img
-                  src={`http://54.175.134.132/images/products/${cartItem.sku}-1-cart.webp`}
+                  src={`${config.API_URL}images/products/${cartItem.sku}-1-cart.webp`}
                   alt="Cart item"
                 />
                 <div>{cartItem.title}</div>

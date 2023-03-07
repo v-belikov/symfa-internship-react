@@ -13,6 +13,6 @@ export interface IProduct {
 }
 
 export interface ICartProduct extends IProduct {
-  item: any;
+  item: IProduct;
   quantity: number;
 }

@@ -9,12 +9,14 @@ import { useGetProductsQuery } from 'app/store/products';
 import './product-card.scss';
 
 export const ProductCards = () => {
-  const { data = {}, isLoading } = useGetProductsQuery(null);
+  const { data = [], isLoading } = useGetProductsQuery(null);
   const sizes = useAppSelector((state: RootState) => state.sizes.sizes);
   const dispatch = useDispatch();
 
   const isAvailableSizes = (array: Array<string>): boolean => {
-    if (sizes.length === 0) return true;
+    if (sizes.length === 0) {
+      return true;
+    }
 
     return sizes.filter(x => array.includes(x)).length !== 0;
   };

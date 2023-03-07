@@ -11,11 +11,9 @@ export const Sizes = () => {
   const handleChange = (event: any) => {
     const { value, checked } = event.target;
 
-    if (checked) {
-      setSelectedSize(pre => [...pre, value]);
-    } else {
-      setSelectedSize(pre => [...pre.filter(elem => elem !== value)]);
-    }
+    setSelectedSize(pre =>
+      checked ? [...pre, value] : pre.filter(elem => elem !== value),
+    );
 
     dispatch(addToSizes(selectedSize));
   };
