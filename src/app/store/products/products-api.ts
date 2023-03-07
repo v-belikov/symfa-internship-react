@@ -4,7 +4,7 @@ import { config } from '../../core/config';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: config.API_URL,
-  paramsSerializer: params => qs.stringify(params, { arrayFormat: 'brackets' }),
+  paramsSerializer: params => qs.stringify(params, { arrayFormat: 'repeat' }),
 });
 
 export const productsApi = createApi({
@@ -13,7 +13,7 @@ export const productsApi = createApi({
   endpoints: builder => ({
     getProducts: builder.query({
       query: params => ({
-        url: `products`,
+        url: 'products',
         params,
       }),
     }),

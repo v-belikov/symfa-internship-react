@@ -113,7 +113,7 @@ module.exports = {
       },
     ],
     'no-restricted-imports': [
-      2,
+      1,
       {
         patterns: ['../../../../*'],
         paths: [

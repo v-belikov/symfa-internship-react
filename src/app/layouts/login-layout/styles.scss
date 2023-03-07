@@ -1,0 +1,13 @@
+#root {
+  height: 100vh;
+}
+
+.login-layout {
+  height: 100%;
+
+  &-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
