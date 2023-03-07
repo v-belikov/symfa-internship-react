@@ -7,7 +7,6 @@ export const store = configureStore({
     [productsApi.reducerPath]: productsApi.reducer,
     basket: basketReducer,
   },
-
   middleware: getDefaultMiddleware => [
     ...getDefaultMiddleware(),
     productsApi.middleware,

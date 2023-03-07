@@ -14,7 +14,8 @@ export const GoodItem: FC<any> = ({ goods }) => {
   return (
     <div className="goods-item">
       <img
-        src={`${config.API_URL}/images/products/${goods.sku}-1-cart.webp`}
+        // src={`${config.API_URL}/images/products/${goods.sku}-1-cart.webp`}
+        src={`${config.API_URL}/${goods.imageCart}`}
         alt="img-cart"
       />
       <div className="goods-item-description">
