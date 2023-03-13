@@ -1,5 +1,4 @@
 import React, { FC, useState } from 'react';
-import { config } from 'app/core/config/config';
 import { ImagePreview } from 'app/store/products/models';
 
 import './image-preview.scss';
@@ -21,9 +20,9 @@ export const ImagesPreview: FC<IImagePreviewProps> = ({
       onMouseEnter={moveActiveOrder}
       onMouseLeave={moveActiveOrder}
     >
-      {images.map((image: ImagePreview) => (
+      {images?.map((image: ImagePreview) => (
         <img
-          src={`${config.API_URL}${image.path}`}
+          src={`http://54.175.134.132/${image.path}`}
           className={`image-preview-item ${
             activeImageOrder === image.order ? '' : 'hidden'
           }`}

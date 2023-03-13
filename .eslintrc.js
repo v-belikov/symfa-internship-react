@@ -37,6 +37,7 @@ module.exports = {
     '@typescript-eslint/no-inferrable-types': 0,
     '@typescript-eslint/consistent-type-assertions': 0,
     '@typescript-eslint/no-non-null-assertion': 0,
+    'no-param-reassign': 0,
     '@typescript-eslint/no-unused-vars': [
       2,
       { argsIgnorePattern: '^_|^req|^next', ignoreRestSiblings: true },
@@ -103,7 +104,7 @@ module.exports = {
       },
     ],
     'no-restricted-imports': [
-      2,
+      1,
       {
         patterns: ['../../../../*'],
         paths: [

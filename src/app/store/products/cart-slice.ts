@@ -56,4 +56,4 @@ export const {
   setCartProducts,
 } = cartSlice.actions;
 
-export default cartSlice.reducer;
+export const cartReducer = cartSlice.reducer;

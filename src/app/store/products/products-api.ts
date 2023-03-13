@@ -1,14 +1,9 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import * as qs from 'qs';
-
-const baseQuery = fetchBaseQuery({
-  baseUrl: 'http://localhost:9040/',
-  paramsSerializer: params => qs.stringify(params, { arrayFormat: 'brackets' }),
-});
+import { createApi } from '@reduxjs/toolkit/query/react';
+import { BASE_QUERY } from '../models';
 
 export const productsApi = createApi({
   reducerPath: 'products',
-  baseQuery,
+  baseQuery: BASE_QUERY,
   endpoints: builder => ({
     getProducts: builder.query({
       query: params => ({
