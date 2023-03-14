@@ -12,9 +12,6 @@ export const COLUMNS: TableProps<IUser>['columns'] = [
     title: 'Username',
     dataIndex: 'username',
     sorter: true,
-    render: username => {
-      // got from dataIndex obj[dataIndex]
-      return username;
-    }, // not necessary
+    render: username => username, // not necessary
   },
 ];

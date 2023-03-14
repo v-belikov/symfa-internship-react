@@ -1,12 +1,15 @@
 import React, { FC, useCallback, useMemo, useState } from 'react';
 import { Button, Table } from 'antd';
 import { useAppSelector } from 'app/core/hooks';
-import { useGetUserQuery } from 'app/store/users/auth-api';
-import { IUser } from 'app/store/users/models';
-import { selectAuth } from 'app/store/users/users-slice';
 import { withEditAndDeleteActions } from '../../../core/utils';
+import {
+  IUser,
+  selectAuth,
+  useGetUsersQuery,
+  useRemoveUserMutation,
+} from '../../../store/users';
 import { AddAndEditUserModal } from './components';
-import { COLUMNS, MOCK_DATA } from './models';
+import { COLUMNS } from './models';
 
 export const Users: FC = () => {
   const [isVisible, setVisible] = useState<boolean>(false);
@@ -16,9 +19,16 @@ export const Users: FC = () => {
     setVisible((prevState: boolean) => !prevState);
   }, []);
 
-  const onEdit = (item: any) => {
+  const onEdit = async (item: any) => {
     setSelectedItem(item);
     toggleVisibility();
+  };
+
+  const [delitedUser] = useRemoveUserMutation();
+
+  const onDelete = async (item: any) => {
+    await delitedUser(item);
+    alert(`${item.username} dropped`);
   };
 
   const onModalCancel = () => {
@@ -27,15 +37,13 @@ export const Users: FC = () => {
   };
 
   const columns = useMemo(
-    () => withEditAndDeleteActions(COLUMNS, onEdit, toggleVisibility),
+    () => withEditAndDeleteActions(COLUMNS, onEdit, onDelete),
     [],
   );
 
   const user = useAppSelector(selectAuth);
 
-  const { data } = useGetUserQuery({ user });
-
-  console.log(data);
+  const { data: existedUsers } = useGetUsersQuery({ user });
 
   return (
     <>
@@ -50,7 +58,7 @@ export const Users: FC = () => {
       </Button>
       <Table
         columns={columns}
-        dataSource={MOCK_DATA}
+        dataSource={existedUsers}
         rowKey={item => item.id}
       />
     </>

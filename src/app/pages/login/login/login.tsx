@@ -2,9 +2,8 @@ import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Card, Col, Form, Input, Row } from 'antd';
 import { useAppDispatch } from 'app/core/hooks';
-import { setUser } from 'app/store/users/users-slice';
 import { ROUTES } from '../../../core/models';
-import { useLoginUserMutation } from '../../../store/users/auth-api';
+import { setUser, useLoginUserMutation } from '../../../store/users';
 
 export const Login: FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -42,16 +41,11 @@ export const Login: FC = () => {
     useLoginUserMutation();
 
   const handleLogin = async () => {
-    if (email && password) {
-      await loginUser({ email, password });
-    } else {
-      console.log('not all data');
-    }
+    await loginUser({ email, password });
   };
 
   useEffect(() => {
     if (isLoginSuccess) {
-      console.log('successfuly');
       dispatch(setUser(loginData.access_token));
       navigate('/admin');
     }

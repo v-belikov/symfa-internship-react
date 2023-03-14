@@ -22,7 +22,49 @@ export const authApi = createApi({
         };
       },
     }),
+    getUsers: builder.query({
+      query: () => {
+        return {
+          url: `users`,
+          method: `GET`,
+        };
+      },
+    }),
+    createUser: builder.mutation({
+      query(data) {
+        return {
+          url: 'register',
+          method: 'POST',
+          body: data,
+        };
+      },
+    }),
+    updateUser: builder.mutation({
+      query(data) {
+        return {
+          url: 'update',
+          method: 'PUT',
+          body: data,
+        };
+      },
+    }),
+    removeUser: builder.mutation({
+      query(data) {
+        return {
+          url: 'remove',
+          method: 'DELETE',
+          body: data,
+        };
+      },
+    }),
   }),
 });
 
-export const { useLoginUserMutation, useGetUserQuery } = authApi;
+export const {
+  useLoginUserMutation,
+  useGetUserQuery,
+  useGetUsersQuery,
+  useCreateUserMutation,
+  useUpdateUserMutation,
+  useRemoveUserMutation,
+} = authApi;

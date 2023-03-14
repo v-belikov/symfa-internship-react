@@ -17,6 +17,7 @@ export const userSlice = createSlice({
   name: 'user',
   reducers: {
     logout: () => initialState,
+    // для добавления информации о пользователе в userStateслайс в магазине
     setUser: (state, action: PayloadAction<string>) => {
       state.token = action.payload;
     },

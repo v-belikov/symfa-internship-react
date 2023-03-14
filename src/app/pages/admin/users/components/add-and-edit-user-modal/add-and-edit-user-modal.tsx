@@ -1,5 +1,12 @@
-import React, { FC, PropsWithChildren, useEffect } from 'react';
+import React, {
+  FC,
+  PropsWithChildren,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import { Button, Form, Input } from 'antd';
+import { useCreateUserMutation, useUpdateUserMutation } from 'app/store/users';
 import { IUser } from 'app/store/users/models';
 import { AddEditModal, IAddEditModalProps } from '../../../../../components';
 
@@ -23,12 +30,40 @@ export const AddAndEditUserModal: FC<AddAndEditUserModalProps> = ({
     }
   }, [open]);
 
+  const [username, setUsername] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+
+  const onEmailChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setEmail(event.target.value);
+    },
+    [],
+  );
+
+  const onNameChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setUsername(event.target.value);
+    },
+    [],
+  );
+
+  const [createdUser] = useCreateUserMutation();
+  const [updatedUser] = useUpdateUserMutation();
+
   const onSubmit = async () => {
     if (await form.validateFields()) {
       onOk?.({
         ...(item || {}),
         ...form.getFieldsValue(),
       });
+    }
+
+    const id = item?.id;
+
+    if (item) {
+      await updatedUser({ id, username, email });
+    } else {
+      await createdUser({ username, email });
     }
   };
 
@@ -47,7 +82,7 @@ export const AddAndEditUserModal: FC<AddAndEditUserModalProps> = ({
           required
           rules={[{ required: true }]}
         >
-          <Input />
+          <Input onChange={onNameChange} />
         </Form.Item>
         <Form.Item
           name="email"
@@ -55,7 +90,7 @@ export const AddAndEditUserModal: FC<AddAndEditUserModalProps> = ({
           required
           rules={[{ required: true, type: 'email' }]}
         >
-          <Input />
+          <Input onChange={onEmailChange} />
         </Form.Item>
         {item && (
           <Form.Item label="Password">
