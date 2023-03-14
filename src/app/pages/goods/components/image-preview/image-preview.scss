@@ -1,0 +1,11 @@
+.image-preview {
+  &-item {
+    display: block;
+    width: 220px;
+    height: 320px;
+
+    &.hidden {
+      display: none;
+    }
+  }
+}

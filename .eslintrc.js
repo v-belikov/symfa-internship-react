@@ -37,6 +37,7 @@ module.exports = {
     '@typescript-eslint/no-inferrable-types': 0,
     '@typescript-eslint/consistent-type-assertions': 0,
     '@typescript-eslint/no-non-null-assertion': 0,
+    'no-param-reassign': 0,
     '@typescript-eslint/no-unused-vars': [
       2,
       { argsIgnorePattern: '^_|^req|^next', ignoreRestSiblings: true },
@@ -89,6 +90,7 @@ module.exports = {
     'import/no-unresolved': 0,
     'import/no-cycle': 0,
     'import/prefer-default-export': 0,
+    'import/no-named-as-default': 0,
     'import/no-useless-path-segments': 0,
     'import/no-extraneous-dependencies': 1,
     'import/extensions': [
@@ -102,7 +104,7 @@ module.exports = {
       },
     ],
     'no-restricted-imports': [
-      2,
+      1,
       {
         patterns: ['../../../../*'],
         paths: [
@@ -185,6 +187,12 @@ module.exports = {
         blankLine: 'always',
         prev: 'if',
         next: '*',
+      },
+    ],
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
       },
     ],
   },
