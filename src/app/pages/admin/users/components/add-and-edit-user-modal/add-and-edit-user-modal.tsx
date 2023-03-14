@@ -1,5 +1,6 @@
 import React, { FC, PropsWithChildren, useEffect } from 'react';
 import { Button, Form, Input } from 'antd';
+// eslint-disable-next-line no-restricted-imports
 import { AddEditModal, IAddEditModalProps } from '../../../../../components';
 
 // TODO replace any type

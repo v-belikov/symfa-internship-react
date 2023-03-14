@@ -6,21 +6,7 @@ import { GoodItem } from './shopping-basket-item';
 import './styles.scss';
 
 export const ShoppingBasket: FC<any> = () => {
-  // const [totalPrice, setTotalPrice] = useState<number>(0);
   const goodsInBasket = useAppSelector(getGoodsInBasket);
-
-  // useEffect(() => {
-  //   const currentTotalPrice = goodsInBasket.reduce(
-  //     (sum: number, item: InitialStateType): any => {
-  //       return sum + item.price * item.quantity;
-  //     },
-  //     0,
-  //   );
-
-  //   console.log('renfer_use_effect');
-
-  //   setTotalPrice(currentTotalPrice);
-  // }, [goodsInBasket]);
 
   const totalPrice = useMemo(
     () =>

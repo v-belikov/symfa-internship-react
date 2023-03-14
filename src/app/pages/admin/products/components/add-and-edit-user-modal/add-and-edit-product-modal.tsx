@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-imports */
 import React, { FC, PropsWithChildren, useEffect } from 'react';
 import { Button, Form, Input } from 'antd';
 import { AddEditModal, IAddEditModalProps } from '../../../../../components';
