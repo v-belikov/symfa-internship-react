@@ -1,9 +1,9 @@
 import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { Button, Card, Col, Form, Input, Row } from 'antd';
-import { useLoginUserMutation, setUser } from 'app/store/users';
-import { ROUTES } from '../../../core/models';
 import { useAppDispatch } from 'app/core/hooks';
+import { setUser, useLoginUserMutation } from 'app/store/users';
+import { ROUTES } from '../../../core/models';
 
 export const Login: FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -30,8 +30,7 @@ export const Login: FC = () => {
   const loginHandler = async () => {
     if (email && password) {
       await loginUser({ email, password });
-      console.log(email, password);
-      alert('login successful');
+      console.log(`login successful ${email} ${password}`);
     } else {
       alert('login of password is empty');
     }
@@ -39,7 +38,9 @@ export const Login: FC = () => {
 
   useEffect(() => {
     if (isSuccess && !error && !isError) {
+      console.log('use_effect');
       dispatch(setUser(loginUser));
+      <Navigate to="./admin" />;
       console.log('successfully');
     }
   }, [isSuccess]);
