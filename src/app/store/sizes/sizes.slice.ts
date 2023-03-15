@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { RootState } from '../store';
 
 interface ISizesState {
   sizes: string[];
@@ -18,5 +19,6 @@ export const sizesSlice = createSlice({
   },
 });
 
+export const getSizesSelector = (state: RootState) => state.sizes.sizes;
 export const sizesReducer = sizesSlice.reducer;
 export const { addToSizes } = sizesSlice.actions;

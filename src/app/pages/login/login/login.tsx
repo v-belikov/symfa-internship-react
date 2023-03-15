@@ -1,10 +1,17 @@
-import React, { FC, useCallback, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button, Card, Col, Form, Input, Row } from 'antd';
-import { ROUTES } from '../../../core/models';
+import { useAppDispatch } from 'app/core/hooks';
+import { ROUTES } from 'app/core/models';
+import { setUser, useLoginMutation } from 'app/store/auth';
 
 export const Login: FC = () => {
   const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [loginUser, { data, isSuccess }] = useLoginMutation();
+
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const onEmailChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -12,6 +19,24 @@ export const Login: FC = () => {
     },
     [],
   );
+
+  const onPasswordChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setPassword(event.target.value);
+    },
+    [],
+  );
+
+  const handleLogin = async () => {
+    await loginUser({ email, password });
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(setUser(data.access_token));
+      navigate('/admin');
+    }
+  }, [isSuccess]);
 
   const recoverLink = useMemo(() => {
     const link = ROUTES.client.link.recover;
@@ -40,14 +65,18 @@ export const Login: FC = () => {
           // TODO add validation
           rules={[{ required: true, type: 'regexp' }]}
         >
-          <Input type="password" />
+          <Input type="password" onChange={onPasswordChange} />
         </Form.Item>
         <Row align="middle" justify="space-between">
           <Col>
             <Link to={recoverLink}>Recover password</Link>
           </Col>
           <Col>
-            <Button htmlType="submit" type="primary">
+            <Button
+              htmlType="submit"
+              type="primary"
+              onClick={() => handleLogin()}
+            >
               Login
             </Button>
           </Col>

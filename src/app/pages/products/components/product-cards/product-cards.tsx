@@ -2,15 +2,15 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { config } from 'app/core/config';
 import { useAppSelector } from 'app/core/hooks';
-import { RootState } from 'app/store';
-import { addToCart } from 'app/store/cart';
+import { addToCart, IProduct } from 'app/store/cart';
 import { useGetProductsQuery } from 'app/store/products';
+import { getSizesSelector } from 'app/store/sizes';
 
 import './product-card.scss';
 
 export const ProductCards = () => {
   const { data = [], isLoading } = useGetProductsQuery(null);
-  const sizes = useAppSelector((state: RootState) => state.sizes.sizes);
+  const sizes = useAppSelector(getSizesSelector);
   const dispatch = useDispatch();
 
   const isAvailableSizes = (array: Array<string>): boolean => {
@@ -29,12 +29,12 @@ export const ProductCards = () => {
     <div className="products-wrapper">
       <p>{data.length} Product(s) found</p>
       <div className="products-container">
-        {data.map((item: any) => (
+        {data.map((item: IProduct) => (
           <div
             className={
               isAvailableSizes(item.availableSizes)
                 ? 'product-item'
-                : 'product-item-hide'
+                : 'product-item product-item-hide'
             }
             key={item.id}
           >
@@ -46,7 +46,7 @@ export const ProductCards = () => {
               Free Shipping
             </p>
             <img
-              src={`${config.API_URL}/images/products/${item.sku}-1-product.webp`}
+              src={`${config.API_URL}/${item.imagePreview[0]}`}
               alt="product"
             />
             <p className="title">{item.title}</p>

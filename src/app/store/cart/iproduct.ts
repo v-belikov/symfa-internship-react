@@ -10,9 +10,10 @@ export interface IProduct {
   sku: number;
   style: string;
   title: string;
+  imagePreview: string[];
 }
 
 export interface ICartProduct extends IProduct {
-  item: IProduct;
+  item: any;
   quantity: number;
 }

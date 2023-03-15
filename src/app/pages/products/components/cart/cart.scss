@@ -1,5 +1,10 @@
 .cart {
-  .cart-btn {
+
+  .active {
+    transform: translateX(0);
+  }
+
+  &-btn {
     width: 20px;
     height: 20px;
     right: 30px;
@@ -8,7 +13,7 @@
     top: 0;
   }
 
-  .cart-container {
+  &-container {
     position: fixed;
     width: 100%;
     height: 100vh;
@@ -17,10 +22,6 @@
     right: 0;
     z-index: 2;
     color: white;
-
-    .subtotal {
-
-    }
 
     .cart-content {
       display: flex;
@@ -35,9 +36,4 @@
       overflow: auto;
     }
   }
-
-  .active {
-    transform: translateX(0);
-  }
-
 }

@@ -83,7 +83,7 @@ export const Cart = () => {
               </div>
             );
           })}
-          <div className="subtotal">
+          <div>
             <p>Subtotal {total.price.toFixed(2)}</p>
             <button
               type="button"

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MenuProps } from 'antd';
-import { ROUTES } from '../../../../../core/models';
+import { ROUTES } from 'app/core/models';
 
 const { usersDashboard, productsDashboard } = ROUTES.admin.link;
 const { login } = ROUTES.client.link;

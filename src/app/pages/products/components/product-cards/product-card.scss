@@ -17,6 +17,10 @@
       align-items: center;
       width: 240px;
 
+      .product-item-hide {
+        display: none;
+      }
+
       &:hover .add-to-cart-btn {
         background-color: #EABF00;
         transition: 0.2s;
