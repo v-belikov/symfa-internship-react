@@ -34,10 +34,10 @@ export const authApi = createApi({
     loginUser: builder.mutation({
       query(data) {
         return {
-          url: 'login',
+          url: 'users/login',
           method: 'POST',
           body: data,
-          credentials: 'include',
+          // credentials: 'include',
         };
       },
     }),
