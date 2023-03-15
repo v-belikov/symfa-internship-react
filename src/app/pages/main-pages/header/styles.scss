@@ -1,0 +1,14 @@
+.header {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+
+  & button {
+    width: 75px;
+    height: 75px;
+
+    & img {
+      width: 100%;
+    }
+  }
+}

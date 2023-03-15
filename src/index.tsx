@@ -6,6 +6,7 @@ import { store } from './app/store';
 import { router } from './router';
 
 import './styles/global/index.scss';
+import './styles/styles.scss';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,

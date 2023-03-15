@@ -1,0 +1,11 @@
+#root {
+  height: 100vh;
+}
+
+.admin-layout {
+  height: 100%;
+
+  &-content {
+    margin: 2em;
+  }
+}
