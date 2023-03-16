@@ -1,6 +1,13 @@
-import React, { FC, PropsWithChildren, useEffect } from 'react';
-import { Button, Form, Input } from 'antd';
-import { AddEditModal, IAddEditModalProps } from '../../../../../components';
+import React, {
+  FC,
+  PropsWithChildren,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
+import { Form, Input } from 'antd';
+import { AddEditModal, IAddEditModalProps } from 'app/components';
+import { useRegistrationMutation, useUpdateMutation } from 'app/store/auth';
 
 // TODO replace any type
 type AddAndEditUserModalProps = Omit<IAddEditModalProps<any>, 'modalType'>;
@@ -12,6 +19,31 @@ export const AddAndEditUserModal: FC<AddAndEditUserModalProps> = ({
   ...rest
 }: PropsWithChildren<AddAndEditUserModalProps>) => {
   const [form] = Form.useForm();
+  const [username, setUsername] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [updatedUser] = useUpdateMutation();
+  const [createdUser] = useRegistrationMutation();
+
+  const onEmailChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setEmail(event.target.value);
+    },
+    [],
+  );
+
+  const onUsernameChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setUsername(event.target.value);
+    },
+    [],
+  );
+  const onPasswordChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setPassword(event.target.value);
+    },
+    [],
+  );
 
   useEffect(() => {
     form.setFieldsValue(item);
@@ -30,6 +62,14 @@ export const AddAndEditUserModal: FC<AddAndEditUserModalProps> = ({
         ...form.getFieldsValue(),
       });
     }
+
+    const id = item?.id;
+
+    if (item) {
+      await updatedUser({ id, username, email });
+    } else {
+      await createdUser({ username, email, password });
+    }
   };
 
   return (
@@ -47,7 +87,7 @@ export const AddAndEditUserModal: FC<AddAndEditUserModalProps> = ({
           required
           rules={[{ required: true }]}
         >
-          <Input />
+          <Input onChange={onUsernameChange} />
         </Form.Item>
         <Form.Item
           name="email"
@@ -55,13 +95,11 @@ export const AddAndEditUserModal: FC<AddAndEditUserModalProps> = ({
           required
           rules={[{ required: true, type: 'email' }]}
         >
-          <Input />
+          <Input onChange={onEmailChange} />
         </Form.Item>
-        {item && (
-          <Form.Item label="Password">
-            <Button type="primary">Send password</Button>
-          </Form.Item>
-        )}
+        <Form.Item name="password" label="Password" required>
+          <Input type="password" onChange={onPasswordChange} />
+        </Form.Item>
       </Form>
     </AddEditModal>
   );

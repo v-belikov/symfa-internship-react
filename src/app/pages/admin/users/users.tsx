@@ -1,13 +1,15 @@
 import React, { FC, useCallback, useMemo, useState } from 'react';
 import { Button, Table } from 'antd';
+import { useDeleteMutation, useGetAllUsersQuery } from 'app/store/auth';
 import { withEditAndDeleteActions } from '../../../core/utils';
 import { AddAndEditUserModal } from './components';
-import { COLUMNS, MOCK_DATA } from './models';
+import { COLUMNS } from './models';
 
 export const Users: FC = () => {
   const [isVisible, setVisible] = useState<boolean>(false);
-  // TODO replace type
-  const [selectedItem, setSelectedItem] = useState<any>(null);
+  const [selectedItem, setSelectedItem] = useState<any | null>(null);
+  const { data } = useGetAllUsersQuery(null);
+  const [userToDelete] = useDeleteMutation();
 
   const toggleVisibility = useCallback(() => {
     setVisible((prevState: boolean) => !prevState);
@@ -18,13 +20,17 @@ export const Users: FC = () => {
     toggleVisibility();
   };
 
+  const onDelete = async (item: any) => {
+    await userToDelete(item);
+  };
+
   const onModalCancel = () => {
     setSelectedItem(null);
     toggleVisibility();
   };
 
   const columns = useMemo(
-    () => withEditAndDeleteActions(COLUMNS, onEdit, toggleVisibility),
+    () => withEditAndDeleteActions(COLUMNS, onEdit, onDelete),
     [],
   );
 
@@ -39,11 +45,7 @@ export const Users: FC = () => {
       <Button type="primary" onClick={toggleVisibility}>
         Add
       </Button>
-      <Table
-        columns={columns}
-        dataSource={MOCK_DATA}
-        rowKey={item => item.id}
-      />
+      <Table dataSource={data} columns={columns} rowKey={item => item.id} />
     </>
   );
 };

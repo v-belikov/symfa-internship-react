@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { ROUTES } from './app/core/models';
 import { AdminLayout, LoginLayout, MainLayout } from './app/layouts';
 import { Login, Products, Recover, Users } from './app/pages';
+import { ProductsList } from './app/pages/products/components/products';
 
 const { admin, client } = ROUTES;
 
@@ -10,7 +11,7 @@ export const router = createBrowserRouter([
   {
     path: client.router.products,
     element: <MainLayout />,
-    children: [],
+    children: [{ path: '', element: <ProductsList /> }],
   },
   {
     path: client.router.login,

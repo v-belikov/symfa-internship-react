@@ -1,6 +1,6 @@
 import React, { FC, PropsWithChildren, useEffect } from 'react';
 import { Button, Form, Input } from 'antd';
-import { AddEditModal, IAddEditModalProps } from '../../../../../components';
+import { AddEditModal, IAddEditModalProps } from 'app/components';
 
 // TODO replace any type
 type AddAndEditProductModalProps = Omit<IAddEditModalProps<any>, 'modalType'>;
